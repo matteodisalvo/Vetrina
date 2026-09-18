@@ -29,6 +29,10 @@ Paste the link of a public repository and Vetrina fills in the card for you: tit
 description, contributors, issues, stars, forks, the colors of its languages and the
 owner's avatar. Change anything you like, watch the preview follow along, and save a PNG.
 
+<p align="center">
+  <img src="docs/images/demo.gif" alt="Vetrina loading a repository, then switching theme, format and bar color">
+</p>
+
 - **Every social network's size**: GitHub (1280 × 640), LinkedIn (1200 × 627),
   Open Graph (1200 × 630) and X (1200 × 675).
 - **Light or dark cards**, with the bottom bar in the colors of the repository's

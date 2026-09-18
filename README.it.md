@@ -29,6 +29,10 @@ Incolli il link di un repository pubblico e Vetrina compila la miniatura al post
 titolo, descrizione, collaboratori, issue, stelle, fork, i colori dei linguaggi e la foto
 del proprietario. Cambi quello che vuoi, l'anteprima segue ogni modifica, e salvi un PNG.
 
+<p align="center">
+  <img src="docs/images/demo.gif" alt="Vetrina carica un repository, poi cambia tema, formato e colore della barra">
+</p>
+
 - **Le misure di ogni social**: GitHub (1280 × 640), LinkedIn (1200 × 627),
   Open Graph (1200 × 630) e X (1200 × 675).
 - **Miniature chiare o scure**, con la barra in basso nei colori dei linguaggi del
