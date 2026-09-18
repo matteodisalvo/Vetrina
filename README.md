@@ -23,6 +23,8 @@
   <img src="docs/images/poster.png" alt="Vetrina: turn any GitHub repository into a beautiful social preview">
 </p>
 
+## 🎬 How it works
+
 <p align="center">
   <img src="docs/images/demo.gif" alt="Vetrina loading a repository, then switching theme, format and bar color">
 </p>

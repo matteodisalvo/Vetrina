@@ -23,6 +23,8 @@
   <img src="docs/images/poster.png" alt="Vetrina: trasforma qualsiasi repository GitHub in un'anteprima social">
 </p>
 
+## 🎬 Come funziona
+
 <p align="center">
   <img src="docs/images/demo.gif" alt="Vetrina carica un repository, poi cambia tema, formato e colore della barra">
 </p>
