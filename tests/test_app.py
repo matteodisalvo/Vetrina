@@ -56,3 +56,24 @@ def test_load_and_switch_language(window):
         assert window.language == language
         assert window.card_title.get() == "octo/demo"
     assert window.picture is not None
+
+
+def test_star_link_after_saving_until_followed(window, monkeypatch, tmp_path):
+    from vetrina import REPOSITORY
+    from vetrina.ui import app as ui
+
+    opened = []
+    monkeypatch.setattr(ui.filedialog, "asksaveasfilename", lambda **_: str(tmp_path / "card.png"))
+    monkeypatch.setattr(ui.webbrowser, "open", opened.append)
+    assert not window.star_link.winfo_ismapped()
+    window.save()
+    window.update()
+    assert (tmp_path / "card.png").exists()
+    assert window.star_link.winfo_ismapped()
+    window.open_repository()
+    window.update()
+    assert opened == [REPOSITORY]
+    assert window.settings["starred"] and not window.star_link.winfo_ismapped()
+    window.save()
+    window.update()
+    assert not window.star_link.winfo_ismapped()

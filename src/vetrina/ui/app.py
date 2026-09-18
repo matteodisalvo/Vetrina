@@ -14,7 +14,7 @@ from tkinter import colorchooser, filedialog
 import customtkinter as ctk
 from PIL import Image, ImageTk
 
-from .. import APP_NAME, AUTHOR, LINKS
+from .. import APP_NAME, AUTHOR, LINKS, REPOSITORY
 from ..github import LoadError, fetch_repository
 from ..i18n import LANGUAGES, TEXTS, system_language, translate
 from ..model import LABELS, LANGUAGE_COLORS, OTHER_LANGUAGE_COLOR, PRESETS, THEMES, Card
@@ -25,6 +25,7 @@ from . import icons
 from .imaging import open_image, with_shadow
 from .theme import (
     ACCENT,
+    ACCENT_TEXT,
     BACKGROUND,
     BORDER,
     CARD_EDGE,
@@ -241,6 +242,12 @@ class App(ctk.CTk):
         self.status_icon.grid(row=0, column=0, padx=(22, 6), pady=8)
         self.status_label = self._label(status, size=12, muted=True)
         self.status_label.grid(row=0, column=1, sticky="w")
+        # After a saved card, a link to leave a star, until it has been followed once
+        self.star_link = ctk.CTkLabel(status, text=self.t("star_prompt"), font=self.font(12), height=20,
+                                      text_color=ACCENT_TEXT, cursor="hand2")
+        self.star_link.bind("<Button-1>", lambda _: self.open_repository())
+        self.star_link.bind("<Enter>", lambda _: self.star_link.configure(font=self._underlined(12)))
+        self.star_link.bind("<Leave>", lambda _: self.star_link.configure(font=self.font(12)))
 
     def _build_text(self, row: int) -> None:
         _, body = self._section(row, self.t("section_text"), "letter-t")
@@ -378,6 +385,19 @@ class App(ctk.CTk):
         """Show text ``key`` of i18n.py in the status line; ``kind`` is "info", "error" or "ok"."""
         self.status_label.configure(text=self.t(key, **values), text_color=STATUS_COLORS[kind])
         self.status_icon.configure(text_color=STATUS_COLORS[kind])
+        self.star_link.grid_remove()
+
+    def _underlined(self, size: int) -> ctk.CTkFont:
+        if (size, "underline") not in self._fonts:
+            self._fonts[size, "underline"] = ctk.CTkFont(size=size, underline=True)
+        return self._fonts[size, "underline"]
+
+    def open_repository(self) -> None:
+        """Open the app's repository on GitHub, and stop asking for a star."""
+        webbrowser.open(REPOSITORY)
+        self.settings["starred"] = True
+        save_settings(self.settings)
+        self.star_link.grid_remove()
 
     @staticmethod
     def _count(label: ctk.CTkLabel, length: int, limit: int) -> None:
@@ -673,6 +693,8 @@ class App(ctk.CTk):
             self.set_status("status_save_failed", "error", error=error.strerror or error)
             return
         self.set_status("status_saved", "ok", path=path)
+        if not self.settings.get("starred"):
+            self.star_link.grid(row=0, column=2, sticky="e", padx=(12, 22))
 
 
 def main() -> None:

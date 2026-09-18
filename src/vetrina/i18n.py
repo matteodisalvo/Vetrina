@@ -144,6 +144,13 @@ TEXTS: dict[str, dict[str, str]] = {
     },
     "status_saved": {"it": "Salvata in {path}", "en": "Saved to {path}", "es": "Guardada en {path}",
                      "fr": "Enregistrée dans {path}", "de": "Gespeichert unter {path}"},
+    "star_prompt": {
+        "it": "Ti piace Vetrina? ⭐ Lasciale una stella su GitHub",
+        "en": "Enjoying Vetrina? ⭐ Star it on GitHub",
+        "es": "¿Te gusta Vetrina? ⭐ Dale una estrella en GitHub",
+        "fr": "Vous aimez Vetrina ? ⭐ Donnez-lui une étoile sur GitHub",
+        "de": "Gefällt dir Vetrina? ⭐ Gib ihr einen Stern auf GitHub",
+    },
     "status_save_failed": {
         "it": "Non riesco a salvare la miniatura: {error}",
         "en": "I can't save the thumbnail: {error}",

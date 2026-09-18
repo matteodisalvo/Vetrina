@@ -9,6 +9,9 @@ __version__ = "1.0.0"
 
 APP_NAME = "Vetrina"
 
+#: The repository of the app, where people can leave a star.
+REPOSITORY = "https://github.com/matteodisalvo/Vetrina"
+
 #: Who made the app and where to follow them, for the info window: (name in i18n.TEXTS
 #: or shown as it is, icon, address).
 AUTHOR = "Matteo Di Salvo"
