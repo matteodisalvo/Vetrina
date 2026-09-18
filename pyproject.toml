@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vetrina"
+version = "1.0.0"
+description = "A desktop app that makes social preview images for GitHub repositories."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Matteo Di Salvo" }]
+keywords = ["github", "social-preview", "open-graph", "thumbnail", "customtkinter", "desktop-app"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: MacOS X",
+    "Environment :: Win32 (MS Windows)",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3",
+    "Topic :: Multimedia :: Graphics",
+]
+dependencies = [
+    "customtkinter>=5.2",
+    "pillow>=10.1",
+    "tkinterdnd2>=0.4",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.5"]
+build = ["pyinstaller>=6.0"]
+
+[project.urls]
+Homepage = "https://github.com/matteodisalvo/vetrina"
+Issues = "https://github.com/matteodisalvo/vetrina/issues"
+Releases = "https://github.com/matteodisalvo/vetrina/releases"
+
+[project.gui-scripts]
+vetrina = "vetrina.ui.app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+vetrina = ["assets/fonts/*", "assets/logo/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 120
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501"]

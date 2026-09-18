@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Vetrina: two glass slabs, blue and orange like two languages, meeting in a V -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1B2130"/>
+      <stop offset="1" stop-color="#0B0E14"/>
+    </linearGradient>
+    <clipPath id="tile"><rect width="1024" height="1024" rx="228"/></clipPath>
+    <filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="70"/></filter>
+    <linearGradient id="left" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9CC3FF" stop-opacity="0.62"/>
+      <stop offset="1" stop-color="#3B82F6" stop-opacity="0.42"/>
+    </linearGradient>
+    <linearGradient id="right" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFC58F" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#F0883E" stop-opacity="0.42"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.5"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/>
+      <stop offset="0.3" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="228" fill="url(#bg)"/>
+  <g clip-path="url(#tile)" filter="url(#blur)" opacity="0.9">
+    <circle cx="360" cy="430" r="230" fill="#2F6FEB"/>
+    <circle cx="680" cy="650" r="210" fill="#E8742A"/>
+    <circle cx="700" cy="300" r="130" fill="#3FB950"/>
+  </g>
+  <rect x="3" y="3" width="1018" height="1018" rx="225" fill="none" stroke="url(#edge)" stroke-width="6"/>
+  <g transform="translate(415 522) rotate(67.13)">
+    <rect x="-324" y="-78" width="648" height="156" rx="78" fill="url(#left)"/>
+    <rect x="-322" y="-76" width="644" height="152" rx="76" fill="none" stroke="url(#rim)" stroke-width="5"/>
+  </g>
+  <g transform="translate(609 522) rotate(112.87)">
+    <rect x="-324" y="-78" width="648" height="156" rx="78" fill="url(#right)"/>
+    <rect x="-322" y="-76" width="644" height="152" rx="76" fill="none" stroke="url(#rim)" stroke-width="5"/>
+  </g>
+</svg>

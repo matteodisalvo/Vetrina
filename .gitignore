@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# Builds of the apps (published on the Releases page, not in the repository)
+build/
+dist/
+
+# Editors and systems
+.DS_Store
+.vscode/
+.idea/
+Thumbs.db
