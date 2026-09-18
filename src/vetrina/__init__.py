@@ -5,7 +5,7 @@ languages and owner avatar), lets every detail be edited with a live preview, an
 card as a PNG in the sizes GitHub, LinkedIn, Open Graph and X expect.
 """
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 APP_NAME = "Vetrina"
 
