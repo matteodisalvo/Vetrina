@@ -23,15 +23,25 @@
   <img src="docs/images/poster.png" alt="Vetrina: trasforma qualsiasi repository GitHub in un'anteprima social">
 </p>
 
-## ✨ Cosa fa
+<p align="center">
+  <img src="docs/images/demo.gif" alt="Vetrina carica un repository, poi cambia tema, formato e colore della barra">
+</p>
+
+## ⬇️ Scarica
+
+<p align="center">
+  <a href="https://github.com/matteodisalvo/vetrina/releases/latest"><img src="https://img.shields.io/badge/Scarica_per_macOS-000000?style=for-the-badge&logo=apple&logoColor=white" alt="Scarica per macOS"></a>
+  <a href="https://github.com/matteodisalvo/vetrina/releases/latest"><img src="https://img.shields.io/badge/Scarica_per_Windows-0078D4?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHRpdGxlPldpbmRvd3M8L3RpdGxlPjxwYXRoIGZpbGw9IndoaXRlIiBkPSJNMCAwaDExLjM3N3YxMS4zNzJIMHptMTIuNjIzIDBIMjR2MTEuMzcySDEyLjYyM3pNMCAxMi42MjNoMTEuMzc3VjI0SDB6bTEyLjYyMyAwSDI0VjI0SDEyLjYyM3oiLz48L3N2Zz4K" alt="Scarica per Windows"></a>
+</p>
+
+Gratis e open source, senza bisogno di un account. La prima volta che la apri, segui i
+[passi di installazione](#-installazione) qui sotto.
+
+## ✨ Funzionalità
 
 Incolli il link di un repository pubblico e Vetrina compila la miniatura al posto tuo:
 titolo, descrizione, collaboratori, issue, stelle, fork, i colori dei linguaggi e la foto
 del proprietario. Cambi quello che vuoi, l'anteprima segue ogni modifica, e salvi un PNG.
-
-<p align="center">
-  <img src="docs/images/demo.gif" alt="Vetrina carica un repository, poi cambia tema, formato e colore della barra">
-</p>
 
 - **Le misure di ogni social**: GitHub (1280 × 640), LinkedIn (1200 × 627),
   Open Graph (1200 × 630) e X (1200 × 675).
@@ -42,26 +52,13 @@ del proprietario. Cambi quello che vuoi, l'anteprima segue ogni modifica, e salv
   dimensione e poi ridotto, per bordi morbidi.
 - **Parla cinque lingue**: italiano, inglese, spagnolo, francese e tedesco, in modalità chiara o scura.
 
+## 🖼️ Esempio
+
+Una miniatura fatta con Vetrina per uno dei miei progetti:
+
 <p align="center">
   <img src="docs/images/example-card.png" width="640" alt="Una miniatura fatta con Vetrina">
 </p>
-
-## 💡 Come nasce
-
-Vetrina nasce da un'esigenza, come tutte le cose belle (e anche parecchie di quelle brutte).
-
-Ogni volta che finivo un progetto andavo tutto fiero ad aggiungerlo al mio profilo
-LinkedIn. Link incollato, descrizione limata, pubblica… e al posto dell'anteprima, il
-nulla. Niente miniatura. Il progetto c'era, ma si presentava al colloquio in pigiama.
-
-Almeno nel mio caso, la miniatura non si creava da sola, LinkedIn non aveva alcuna
-intenzione di inventarsela, e io non avevo alcuna voglia di aprire un programma di grafica
-ogni volta per allineare al pixel titolo, stelline e contatori.
-
-Così ho fatto quello che fa ogni programmatore davanti a un compito noioso da cinque
-minuti: ho passato parecchie serate a scrivere un programma che lo facesse al posto mio.
-E visto che ormai c'era, ho pensato di renderlo disponibile a tutti. Se anche i tuoi
-progetti escono di casa in pigiama, Vetrina serve a vestirli.
 
 ## 📦 Installazione
 
@@ -103,6 +100,23 @@ vetrina                 # oppure: python3 -m vetrina
 
 Per usare la miniatura come anteprima del repository su GitHub, apri nel repository
 **Settings → General → Social preview → Edit → Upload an image**.
+
+## 💡 Come nasce
+
+Vetrina nasce da un'esigenza, come tutte le cose belle (e anche parecchie di quelle brutte).
+
+Ogni volta che finivo un progetto andavo tutto fiero ad aggiungerlo al mio profilo
+LinkedIn. Link incollato, descrizione limata, pubblica… e al posto dell'anteprima, il
+nulla. Niente miniatura. Il progetto c'era, ma si presentava al colloquio in pigiama.
+
+Almeno nel mio caso, la miniatura non si creava da sola, LinkedIn non aveva alcuna
+intenzione di inventarsela, e io non avevo alcuna voglia di aprire un programma di grafica
+ogni volta per allineare al pixel titolo, stelline e contatori.
+
+Così ho fatto quello che fa ogni programmatore davanti a un compito noioso da cinque
+minuti: ho passato parecchie serate a scrivere un programma che lo facesse al posto mio.
+E visto che ormai c'era, ho pensato di renderlo disponibile a tutti. Se anche i tuoi
+progetti escono di casa in pigiama, Vetrina serve a vestirli.
 
 ## 🛠️ Sviluppo
 

@@ -23,15 +23,25 @@
   <img src="docs/images/poster.png" alt="Vetrina: turn any GitHub repository into a beautiful social preview">
 </p>
 
-## ✨ What it does
+<p align="center">
+  <img src="docs/images/demo.gif" alt="Vetrina loading a repository, then switching theme, format and bar color">
+</p>
+
+## ⬇️ Download
+
+<p align="center">
+  <a href="https://github.com/matteodisalvo/vetrina/releases/latest"><img src="https://img.shields.io/badge/Download_for_macOS-000000?style=for-the-badge&logo=apple&logoColor=white" alt="Download for macOS"></a>
+  <a href="https://github.com/matteodisalvo/vetrina/releases/latest"><img src="https://img.shields.io/badge/Download_for_Windows-0078D4?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHRpdGxlPldpbmRvd3M8L3RpdGxlPjxwYXRoIGZpbGw9IndoaXRlIiBkPSJNMCAwaDExLjM3N3YxMS4zNzJIMHptMTIuNjIzIDBIMjR2MTEuMzcySDEyLjYyM3pNMCAxMi42MjNoMTEuMzc3VjI0SDB6bTEyLjYyMyAwSDI0VjI0SDEyLjYyM3oiLz48L3N2Zz4K" alt="Download for Windows"></a>
+</p>
+
+Free and open source, no account needed. The first time you open it, follow the
+[install steps](#-install) below.
+
+## ✨ Features
 
 Paste the link of a public repository and Vetrina fills in the card for you: title,
 description, contributors, issues, stars, forks, the colors of its languages and the
 owner's avatar. Change anything you like, watch the preview follow along, and save a PNG.
-
-<p align="center">
-  <img src="docs/images/demo.gif" alt="Vetrina loading a repository, then switching theme, format and bar color">
-</p>
 
 - **Every social network's size**: GitHub (1280 × 640), LinkedIn (1200 × 627),
   Open Graph (1200 × 630) and X (1200 × 675).
@@ -42,26 +52,13 @@ owner's avatar. Change anything you like, watch the preview follow along, and sa
   down, for smooth edges.
 - **Speaks five languages**: English, Italian, Spanish, French and German, in light or dark mode.
 
+## 🖼️ Example
+
+A card made with Vetrina for one of my projects:
+
 <p align="center">
   <img src="docs/images/example-card.png" width="640" alt="A card made with Vetrina">
 </p>
-
-## 💡 How it started
-
-Vetrina was born out of a need, like all good things (and quite a few bad ones).
-
-Every time I finished a project I would proudly add it to my LinkedIn profile. Link
-pasted, description polished, post… and where the preview should have been, nothing.
-No thumbnail. The project was there, but it had shown up to the job interview in pajamas.
-
-At least in my case, the thumbnail did not make itself, LinkedIn had no intention of
-making one up, and I had no wish to open a graphics program every time to line up the
-title, the stars and the counters to the pixel.
-
-So I did what every programmer does when facing a boring five-minute task: I spent
-several evenings writing a program to do it for me. And since it was there anyway, I
-thought I would share it. If your projects also leave the house in pajamas, Vetrina is
-here to dress them.
 
 ## 📦 Install
 
@@ -104,6 +101,23 @@ vetrina                 # or: python3 -m vetrina
 
 To make the card your repository's preview on GitHub, open the repository's
 **Settings → General → Social preview → Edit → Upload an image**.
+
+## 💡 How it started
+
+Vetrina was born out of a need, like all good things (and quite a few bad ones).
+
+Every time I finished a project I would proudly add it to my LinkedIn profile. Link
+pasted, description polished, post… and where the preview should have been, nothing.
+No thumbnail. The project was there, but it had shown up to the job interview in pajamas.
+
+At least in my case, the thumbnail did not make itself, LinkedIn had no intention of
+making one up, and I had no wish to open a graphics program every time to line up the
+title, the stars and the counters to the pixel.
+
+So I did what every programmer does when facing a boring five-minute task: I spent
+several evenings writing a program to do it for me. And since it was there anyway, I
+thought I would share it. If your projects also leave the house in pajamas, Vetrina is
+here to dress them.
 
 ## 🛠️ Development
 
