@@ -11,6 +11,11 @@ from vetrina import github
 from vetrina.github import LoadError, fetch_repository, parse_repository
 
 
+@pytest.fixture(autouse=True)
+def fresh_cache():
+    github._cache.clear()  # every test asks GitHub again
+
+
 @pytest.mark.parametrize("text", [
     "matteodisalvo/vetrina",
     "  matteodisalvo/vetrina  ",
@@ -42,7 +47,7 @@ class FakeResponse(io.BytesIO):
         self.close()
 
 
-def fake_github(url: str) -> FakeResponse:
+def fake_github(url: str, token: str = "") -> FakeResponse:
     if url.endswith("/languages"):
         return FakeResponse(json.dumps({"Python": 90, "Shell": 10}).encode())
     if "/contributors" in url:
@@ -76,7 +81,7 @@ def test_fetch(monkeypatch):
     (urllib.error.URLError("offline"), "error_offline"),
 ])
 def test_fetch_errors(monkeypatch, error, key):
-    def failing(url):
+    def failing(url, token=""):
         raise error
 
     monkeypatch.setattr(github, "_open", failing)
@@ -85,44 +90,37 @@ def test_fetch_errors(monkeypatch, error, key):
     assert raised.value.key == key
 
 
-def test_certificates_come_with_the_app():
-    # The built apps cannot rely on the certificates of the machine that built them
-    assert github.SSL_CONTEXT.cert_store_stats()["x509_ca"] > 100
-
-
 def test_logo_shown_in_the_readme_comes_first():
-    files = {"README.md": 900, "assets/logo/demo-1024.png": 50_000, "assets/logo/demo-icon.png": 40_000,
-             "docs/logo.png": 30_000}
-    readme = '<p align="center"><img src="assets/logo/demo-1024.png" width="112"></p>\n![shot](docs/shot.png)'
-    assert github.logo_candidates(files, readme, "octo", "demo")[0] == "assets/logo/demo-1024.png"
+    readme = ('<p align="center"><img src="assets/logo/demo-1024.png" width="112"></p>\n'
+              "![shot](docs/shot.png) ![build](https://img.shields.io/badge/logo-blue.png)")
+    assert github.logo_candidates(readme, "octo", "demo")[0] == "assets/logo/demo-1024.png"
     readme = "![logo](https://raw.githubusercontent.com/octo/demo/main/docs/logo.png?raw=true)"
-    assert github.logo_candidates(files, readme, "octo", "demo")[0] == "docs/logo.png"
+    assert github.logo_candidates(readme, "octo", "demo")[0] == "docs/logo.png"
+    readme = "![logo](https://example.com/img/demo-logo.png)"
+    assert github.logo_candidates(readme, "octo", "demo")[0] == "https://example.com/img/demo-logo.png"
 
 
-def test_logo_found_by_its_name():
-    files = {"README.md": 900, "docs/screenshot.png": 90_000, "src/app/icon.png": 8_000,
-             "branding/demo-logo.png": 20_000, "tests/fixtures/logo.png": 500, "node_modules/x/logo.png": 900,
-             "art/logo.svg": 3_000, "docs/huge-logo.png": 9_000_000}
-    candidates = github.logo_candidates(files, "", "octo", "demo")
-    assert candidates == ["branding/demo-logo.png", "src/app/icon.png"]
-    assert github.logo_candidates({"docs/photo.png": 10}, "", "octo", "demo") == []
+def test_without_a_logo_in_the_readme_the_usual_places_are_tried():
+    readme = "![logo](art/logo.svg) ![shot](docs/screenshot.png) ![x](tests/fixtures/logo.png)"
+    candidates = github.logo_candidates(readme, "octo", "demo")
+    assert candidates[:3] == ["logo.png", "icon.png", "assets/logo.png"]
+    assert all(not path.endswith(".svg") and not path.startswith("tests/") for path in candidates)
 
 
-def logo_github(size: tuple[int, int]):
-    def fake(url: str) -> FakeResponse:
-        if "/git/trees/" in url:
-            return FakeResponse(json.dumps({"tree": [
-                {"path": "README.md", "type": "blob", "size": 40},
-                {"path": "assets", "type": "tree"},
-                {"path": "assets/logo.png", "type": "blob", "size": 100},
-            ]}).encode())
-        if url.endswith("/README.md"):
-            return FakeResponse(b"# Demo")
-        if url.endswith("/assets/logo.png"):
-            picture = io.BytesIO()
-            Image.new("RGB", size, "blue").save(picture, "PNG")
-            return FakeResponse(picture.getvalue())
-        if url.startswith("https://api.github.com/repos/octo/demo") and "/" not in url.rpartition("demo")[2]:
+def logo_github(size: tuple[int, int], seen: list | None = None):
+    def fake(url: str, token: str = "") -> FakeResponse:
+        if seen is not None:
+            seen.append((url, token))
+        if url.startswith("https://raw.githubusercontent.com/octo/demo/main/"):
+            path = url.rpartition("/main/")[2]
+            if path == "README.md":
+                return FakeResponse(b"# Demo")
+            if path == "assets/logo.png":
+                picture = io.BytesIO()
+                Image.new("RGB", size, "blue").save(picture, "PNG")
+                return FakeResponse(picture.getvalue())
+            raise urllib.error.HTTPError(url, 404, "Not Found", {}, None)
+        if url == "https://api.github.com/repos/octo/demo":
             return FakeResponse(json.dumps({
                 "full_name": "octo/demo", "description": "A demo", "default_branch": "main",
                 "owner": {"avatar_url": "https://avatars.example/u/1?v=4"},
@@ -143,3 +141,65 @@ def test_a_long_logo_is_left_for_the_owner_picture(monkeypatch):
     repository = fetch_repository("octo/demo")
     assert repository["image_name"] == ""
     assert repository["image"].size == (8, 8)
+
+
+def test_a_load_asks_the_api_three_times_and_then_nothing_for_an_hour(monkeypatch):
+    seen = []
+    monkeypatch.setattr(github, "_open", logo_github((20, 20), seen))
+    fetch_repository("octo/demo")
+    assert len([url for url, _ in seen if url.startswith(github.API)]) == 3
+    seen.clear()
+    assert fetch_repository("https://github.com/Octo/Demo")["title"] == "octo/demo"
+    assert seen == []
+
+
+def test_the_token_goes_only_to_the_api(monkeypatch):
+    requests = []
+    monkeypatch.setattr(github.urllib.request, "urlopen", lambda request, **_: requests.append(request))
+    github._open("https://api.github.com/repos/octo/demo", "secret")
+    github._open("https://raw.githubusercontent.com/octo/demo/main/logo.png", "secret")
+    assert requests[0].get_header("Authorization") == "Bearer secret"
+    assert requests[1].get_header("Authorization") is None
+
+
+def test_a_refused_token_is_left_out(monkeypatch):
+    seen = []
+    answer = logo_github((20, 20), seen)
+
+    def refusing(url, token=""):
+        if token:
+            raise urllib.error.HTTPError(url, 401, "Bad credentials", {}, None)
+        return answer(url, token)
+
+    monkeypatch.setattr(github, "_open", refusing)
+    repository = fetch_repository("octo/demo", "wrong")
+    assert repository["token_refused"] and repository["title"] == "octo/demo"
+
+
+def test_the_limit_says_until_when(monkeypatch):
+    def limited(url, token=""):
+        raise urllib.error.HTTPError(url, 403, "Forbidden", {"X-RateLimit-Reset": "0"}, None)
+
+    monkeypatch.setattr(github, "_open", limited)
+    with pytest.raises(LoadError) as raised:
+        fetch_repository("octo/demo")
+    assert raised.value.key == "error_rate_limited"
+    assert raised.value.values["time"] == github.time.strftime("%H:%M", github.time.localtime(0))
+
+
+def test_where_the_token_comes_from(monkeypatch):
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    monkeypatch.delenv("GH_TOKEN", raising=False)
+    monkeypatch.setattr(github, "_cli_token", lambda: "from-cli")
+    assert github.find_token(" saved ") == "saved"
+    assert github.find_token() == "from-cli"
+    monkeypatch.setenv("GH_TOKEN", "from-env")
+    assert github.find_token() == "from-env"
+    monkeypatch.setattr(github, "_cli_token", lambda: "")
+    monkeypatch.delenv("GH_TOKEN")
+    assert github.find_token() == ""
+
+
+def test_certificates_come_with_the_app():
+    # The built apps cannot rely on the certificates of the machine that built them
+    assert github.SSL_CONTEXT.cert_store_stats()["x509_ca"] > 100

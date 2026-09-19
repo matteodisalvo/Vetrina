@@ -104,6 +104,16 @@ vetrina                 # oppure: python3 -m vetrina
 Per usare la miniatura come anteprima del repository su GitHub, apri nel repository
 **Settings → General → Social preview → Edit → Upload an image**.
 
+### Il limite di GitHub
+
+Senza account, GitHub risponde a 60 richieste l'ora da ogni connessione. Vetrina ne usa 3
+per ogni repository, circa 20 caricamenti l'ora, e un repository ricaricato entro l'ora non
+costa nulla. Per alzare il limite a 5.000 richieste l'ora, incolla un token GitHub nella
+finestra **Info** ([creane uno](https://github.com/settings/personal-access-tokens/new):
+basta l'accesso predefinito, in sola lettura ai repository pubblici). Se sul computer c'è la
+[GitHub CLI](https://cli.github.com) con l'accesso fatto, Vetrina usa da sola il suo token.
+Il token resta sul tuo computer e viene mandato solo a GitHub.
+
 ## 💡 Come nasce
 
 Vetrina nasce da un'esigenza, come tutte le cose belle (e anche parecchie di quelle brutte).

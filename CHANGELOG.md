@@ -10,6 +10,14 @@ All notable changes to Vetrina are listed here. The format follows
 - The card shows the project's logo when the repository has one: the logo or icon its README
   shows, or else a picture named "logo" or "icon". Without one, or when the logo is an SVG or
   too long for the square, the owner's picture is used as before.
+- An optional GitHub token, in the Info window, lifts GitHub's limit from 60 to 5,000
+  requests an hour; the token of the GitHub CLI, or of `GITHUB_TOKEN` and `GH_TOKEN`, is
+  used on its own.
+
+### Changed
+- A load takes 3 requests of GitHub's limit instead of 4, and a repository loaded again
+  within the hour takes none.
+- When GitHub limits the requests, the message says until when.
 
 ## [1.1.1] - 2026-09-19
 

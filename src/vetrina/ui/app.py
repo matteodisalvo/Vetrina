@@ -15,7 +15,7 @@ import customtkinter as ctk
 from PIL import Image, ImageTk
 
 from .. import APP_NAME, AUTHOR, LINKS, REPOSITORY
-from ..github import LoadError, fetch_repository
+from ..github import LoadError, fetch_repository, find_token
 from ..i18n import LANGUAGES, TEXTS, system_language, translate
 from ..model import LABELS, LANGUAGE_COLORS, OTHER_LANGUAGE_COLOR, PRESETS, THEMES, Card
 from ..paths import ICON_FILE, LOGO_FILE
@@ -49,6 +49,8 @@ except ImportError:
 
 #: Choices for the bottom bar, and the longest text each field takes.
 BAR_LANGUAGES, BAR_SINGLE = "languages", "single"
+#: A new fine-grained token, which reads public repositories and nothing else.
+TOKEN_PAGE = "https://github.com/settings/personal-access-tokens/new"
 TITLE_LIMIT, DESCRIPTION_LIMIT, FOOTER_LIMIT = 60, 200, 40
 
 #: Icons of the formats and of the themes.
@@ -559,9 +561,35 @@ class App(ctk.CTk):
             text = self.t(name) if name in TEXTS else name
             GlassButton(links, text, lambda address=address: webbrowser.open(address), icon=icon, height=40,
                         font=self.font(13, "bold")).grid(row=0, column=column, padx=2)
+        self._build_token(content)
         self._label(content, self.t("icons_credit"), size=11, muted=True, anchor="center").pack(pady=(20, 0))
         window.bind("<Escape>", lambda _: window.destroy())
         self._present(window)
+
+    def _build_token(self, content: ctk.CTkFrame) -> None:
+        """The optional GitHub token, which lifts GitHub's limit of 60 requests an hour."""
+        ctk.CTkFrame(content, height=1, width=300, fg_color=BORDER).pack(fill="x", pady=20)
+        self._label(content, self.t("token_title"), size=12, weight="bold").pack(fill="x")
+        token = tk.StringVar(value=self.settings.get("github_token", ""))
+        field = Field(content, textvariable=token, icon="brand-github", width=300, font=self.font())
+        field.entry.configure(show="•")
+        field.pack(fill="x", pady=(6, 6))
+        token.trace_add("write", lambda *_: self._save_token(token.get()))
+        note = self.t("token_note")
+        if not token.get() and find_token():
+            note += " " + self.t("token_cli")
+        self._label(content, note, size=11, muted=True, wraplength=320).pack(fill="x")
+        create = ctk.CTkLabel(content, text=self.t("token_create"), font=self.font(12), height=20,
+                              text_color=ACCENT_TEXT, cursor="hand2", anchor="w")
+        create.bind("<Button-1>", lambda _: webbrowser.open(TOKEN_PAGE))
+        create.pack(fill="x", pady=(4, 0))
+
+    def _save_token(self, token: str) -> None:
+        if token.strip():
+            self.settings["github_token"] = token.strip()
+        else:
+            self.settings.pop("github_token", None)
+        save_settings(self.settings)
 
     def _present(self, window: ctk.CTkToplevel) -> None:
         """Show a window built hidden, centered on the main one and a little above its middle.
@@ -606,7 +634,7 @@ class App(ctk.CTk):
 
         def work() -> None:
             try:
-                results.put(fetch_repository(text))
+                results.put(fetch_repository(text, find_token(self.settings.get("github_token", ""))))
             except Exception as error:  # reported in the window, never raised in the thread
                 results.put(error)
 
@@ -637,7 +665,10 @@ class App(ctk.CTk):
         self._update_legend()
         self._set_picture(outcome["image"], label="project_logo" if outcome.get("image_name") else "github_avatar")
         self.bar.set(BAR_LANGUAGES)
-        self.set_status("status_loaded", "ok", title=outcome["title"])
+        if outcome.get("token_refused"):
+            self.set_status("status_token_refused", "error", title=outcome["title"])
+        else:
+            self.set_status("status_loaded", "ok", title=outcome["title"])
 
     def choose_picture(self) -> None:
         path = filedialog.askopenfilename(

@@ -105,6 +105,16 @@ vetrina                 # or: python3 -m vetrina
 To make the card your repository's preview on GitHub, open the repository's
 **Settings → General → Social preview → Edit → Upload an image**.
 
+### GitHub's limit
+
+Without an account, GitHub answers 60 requests an hour from each connection. Vetrina uses 3
+for each repository, about 20 loads an hour, and a repository loaded again within the hour
+costs nothing. To lift the limit to 5,000 requests an hour, paste a GitHub token in the
+**Info** window ([create one](https://github.com/settings/personal-access-tokens/new): the
+default, read-only access to public repositories, is enough). If the
+[GitHub CLI](https://cli.github.com) is installed and signed in, Vetrina uses its token on
+its own. The token stays on your computer and is sent only to GitHub.
+
 ## 💡 How it started
 
 Vetrina was born out of a need, like all good things (and quite a few bad ones).
