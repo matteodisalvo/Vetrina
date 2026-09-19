@@ -90,7 +90,7 @@ class App(ctk.CTk):
         self.minsize(1200, 700)
 
         self.picture: Image.Image | None = None
-        self.picture_name, self.picture_from_github = "", False
+        self.picture_name, self.picture_label = "", ""  # label: a text of i18n.py naming a loaded picture
         self.languages: dict[str, int] = {}
         self.accent = "#3572A5"
         self._rendered: Image.Image | None = None
@@ -453,13 +453,13 @@ class App(ctk.CTk):
             self._label(self.legend, self.t("and_more", count=len(languages) - len(shown)), size=12,
                         muted=True).grid(row=3, column=0, columnspan=2, sticky="w", pady=2)
 
-    def _set_picture(self, picture: Image.Image | None, name: str = "", from_github: bool = False) -> None:
-        self.picture, self.picture_name, self.picture_from_github = picture, name, from_github
+    def _set_picture(self, picture: Image.Image | None, name: str = "", label: str = "") -> None:
+        self.picture, self.picture_name, self.picture_label = picture, name, label
         self._show_picture()
         self.schedule()
 
     def _show_picture(self) -> None:
-        name = self.t("github_avatar") if self.picture_from_github else self.picture_name
+        name = self.t(self.picture_label) if self.picture_label else self.picture_name
         self.drop_zone.show(self.picture, name if self.picture is not None else "")
 
     def schedule(self) -> None:
@@ -635,7 +635,7 @@ class App(ctk.CTk):
             variable.set(str(value))
         self.languages = outcome["languages"]
         self._update_legend()
-        self._set_picture(outcome["image"], from_github=True)
+        self._set_picture(outcome["image"], label="project_logo" if outcome.get("image_name") else "github_avatar")
         self.bar.set(BAR_LANGUAGES)
         self.set_status("status_loaded", "ok", title=outcome["title"])
 

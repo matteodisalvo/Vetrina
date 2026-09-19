@@ -43,7 +43,8 @@ Free and open source, no account needed. The first time you open it, follow the
 
 Paste the link of a public repository and Vetrina fills in the card for you: title,
 description, contributors, issues, stars, forks, the colors of its languages and the
-owner's avatar. Change anything you like, watch the preview follow along, and save a PNG.
+project's logo (or, when it has none, the owner's avatar). Change anything you like,
+watch the preview follow along, and save a PNG.
 
 - **Every social network's size**: GitHub (1280 × 640), LinkedIn (1200 × 627),
   Open Graph (1200 × 630) and X (1200 × 675).

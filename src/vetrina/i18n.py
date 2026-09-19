@@ -74,6 +74,8 @@ TEXTS: dict[str, dict[str, str]] = {
     "remove": {"it": "Rimuovi", "en": "Remove", "es": "Quitar", "fr": "Retirer", "de": "Entfernen"},
     "github_avatar": {"it": "Foto profilo GitHub", "en": "GitHub profile picture",
                       "es": "Foto de perfil de GitHub", "fr": "Photo de profil GitHub", "de": "GitHub-Profilbild"},
+    "project_logo": {"it": "Logo del progetto", "en": "Project logo", "es": "Logo del proyecto",
+                     "fr": "Logo du projet", "de": "Projektlogo"},
 
     # Statistics, labels, bar
     "section_stats": {"it": "Statistiche GitHub", "en": "GitHub statistics", "es": "Estadísticas de GitHub",

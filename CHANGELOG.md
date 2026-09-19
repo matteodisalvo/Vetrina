@@ -4,6 +4,13 @@ All notable changes to Vetrina are listed here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] - 2026-09-19
+
+### Added
+- The card shows the project's logo when the repository has one: the logo or icon its README
+  shows, or else a picture named "logo" or "icon". Without one, or when the logo is an SVG or
+  too long for the square, the owner's picture is used as before.
+
 ## [1.1.1] - 2026-09-19
 
 ### Fixed

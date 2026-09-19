@@ -42,8 +42,9 @@ Gratis e open source, senza bisogno di un account. La prima volta che la apri, s
 ## ✨ Funzionalità
 
 Incolli il link di un repository pubblico e Vetrina compila la miniatura al posto tuo:
-titolo, descrizione, collaboratori, issue, stelle, fork, i colori dei linguaggi e la foto
-del proprietario. Cambi quello che vuoi, l'anteprima segue ogni modifica, e salvi un PNG.
+titolo, descrizione, collaboratori, issue, stelle, fork, i colori dei linguaggi e il logo
+del progetto (o, se non ce l'ha, la foto del proprietario). Cambi quello che vuoi,
+l'anteprima segue ogni modifica, e salvi un PNG.
 
 - **Le misure di ogni social**: GitHub (1280 × 640), LinkedIn (1200 × 627),
   Open Graph (1200 × 630) e X (1200 × 675).
