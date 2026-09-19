@@ -4,6 +4,13 @@ All notable changes to Vetrina are listed here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.1] - 2026-09-19
+
+### Fixed
+- The downloaded apps could not load repositories and reported a connection error: they
+  looked for the security certificates where the machine that built them kept them. The
+  certificates now come with the app.
+
 ## [1.1.0] - 2026-09-18
 
 ### Added

@@ -82,3 +82,8 @@ def test_fetch_errors(monkeypatch, error, key):
     with pytest.raises(LoadError) as raised:
         fetch_repository("octo/demo")
     assert raised.value.key == key
+
+
+def test_certificates_come_with_the_app():
+    # The built apps cannot rely on the certificates of the machine that built them
+    assert github.SSL_CONTEXT.cert_store_stats()["x509_ca"] > 100

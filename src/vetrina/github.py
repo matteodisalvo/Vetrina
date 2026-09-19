@@ -5,10 +5,16 @@ from __future__ import annotations
 import io
 import json
 import re
+import ssl
 import urllib.error
 import urllib.request
 
+import certifi
 from PIL import Image
+
+#: The certificates to trust come with certifi: the Python inside the built apps would look
+#: for them where the machine that built it kept them, which is not there on other computers.
+SSL_CONTEXT = ssl.create_default_context(cafile=certifi.where())
 
 
 class LoadError(Exception):
@@ -31,7 +37,7 @@ def parse_repository(text: str) -> tuple[str, str]:
 
 def _open(url: str):
     headers = {"User-Agent": "vetrina", "Accept": "application/vnd.github+json"}
-    return urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=15)
+    return urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=15, context=SSL_CONTEXT)
 
 
 def fetch_repository(text: str) -> dict:
